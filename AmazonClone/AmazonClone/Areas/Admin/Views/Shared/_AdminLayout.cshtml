@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="icon" href="images/icons/01cada77a0a7d326d85b7969fe26a728.jpg">
+    <!-- Load a font called Roboto from Google Fonts. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Here are the CSS files for this page. -->
+    <link href="~/styles/pages/admin.css" rel="stylesheet" />
+    <link href="~/styles/shared/general.css" rel="stylesheet" />
+    <link href="~/styles/pages/amazon.css" rel="stylesheet" />
+    <link href="~/styles/pages/admin-footer.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#orders">Orders</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+       @RenderBody()
+
+    </main>
+    @await Html.PartialAsync("_AdminFooter.cshtml")
+   
+    <script type="module" src="~/javascript/amazon.js"></script>
+    <script type="module" src="~/javascript/admin.js"></script>
+</body>
+</html>

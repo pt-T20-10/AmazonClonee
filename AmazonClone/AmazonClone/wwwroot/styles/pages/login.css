@@ -1,0 +1,150 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.logo {
+    display: block;
+    margin: 20px auto;
+    width: 100px;
+}
+
+.login-box {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #a6a6a6;
+    border-radius: 3px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+.continue-btn {
+    width: 100%;
+    padding: 7px;
+    background-color: #f0c14b;
+    border: 1px solid #a88734;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.continue-btn:hover {
+    background-color: #f1c860;
+}
+
+.terms {
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+.help-link {
+    color: #0066c0;
+    text-decoration: none;
+    margin: 0 auto;
+}
+
+.help-link:hover {
+    text-decoration: underline;
+    color: #c45500;
+}
+
+.divider {
+    text-align: center;
+    position: relative;
+    margin: 25px 0;
+}
+
+.divider h5 {
+    display: inline-block;
+    background-color: #fff;
+    padding: 0 8px;
+    color: #767676;
+    font-weight: 400;
+    font-size: 12px;
+    z-index: 2;
+    position: relative;
+    margin: 0;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #e7e7e7;
+    z-index: 1;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: #555;
+}
+
+footer a {
+    color: #0066c0;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer p {
+    margin-top: 10px;
+}
+a{
+  text-decoration: none;
+}
+
+.create-account-btn {
+    width: 100%;
+    text-align: center;
+}
+
+.create-account-btn a {
+    display: inline-block;
+    width: 100%;
+    padding: 7px;
+    background-color: #f0f0f0;
+    border: 1px solid #adb1b8;
+    border-radius: 3px;
+    color: #111;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.create-account-btn a:hover {
+    background-color: #e7e9ec;
+}
