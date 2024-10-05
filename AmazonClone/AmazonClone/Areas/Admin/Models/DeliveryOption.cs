@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AmazonClone.Areas.Admin.Models;
 
 public partial class DeliveryOption
 {
-    public string DeliveryOptionId { get; set; } = null!;
+    [Required]
+    public string DeliveryOptionId { get; set; } 
 
     public string? Name { get; set; }
 
