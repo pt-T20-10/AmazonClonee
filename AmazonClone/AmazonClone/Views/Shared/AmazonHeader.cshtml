@@ -1,0 +1,43 @@
+﻿
+@*
+  
+*@
+<div class="amazon-header">
+    <div class="amazon-header-left-section">
+        <a asp-controller="Home" asp-action="Home" class="header-link">
+            <img class="amazon-logo" src="~/images/amazon-logo-white.png">
+            <img class="amazon-mobile-logo" src="~/images/amazon-mobile-logo-white.png">
+        </a>
+    </div>
+
+    <div class="amazon-header-middle-section">
+        <input class="search-bar" type="text" placeholder="Search" id="searchInput">
+        <button class="search-button" id="searchButton">
+            <img class="search-icon" src="~/images/icons/search-icon.png">
+        </button>
+    </div>
+
+    <div class="amazon-header-right-section">
+        <div class="user-info">
+            <span id="userName"></span>
+            <a id="logoutBtn" class="header-link log-btn" style="display: none;">Logout</a>
+            <a id="loginBtn" class="header-link log-btn" style="display: none;">Login</a>
+        </div>
+        <!-- Add this new tracking button -->
+        <a class="tracking-link header-link" href="~/tracking.html">
+            <span class="tracking-text">Track</span>
+            <span class="tracking-text">Package</span>
+        </a>
+
+        <a class="orders-link header-link" href="~/orders.html">
+            <span class="returns-text">Returns</span>
+            <span class="orders-text">& Orders</span>
+        </a>
+
+        <a class="cart-link header-link" href="~/checkout.html">
+            <img class="cart-icon" src="images/icons/cart-icon.png">
+            <div class="cart-quantity js-cart-quantity">0</div>
+            <div class="cart-text">Cart</div>
+        </a>
+    </div>
+</div>

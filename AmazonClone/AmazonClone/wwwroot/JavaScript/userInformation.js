@@ -1,26 +1,3 @@
- let users = [
-    {
-        users_id: "US-2023-01-01-1234567890",
-        users_name: "John Doe",
-        email: "user@example.com",
-        phone: "1234567890",
-        password: "12345"
-    },
-    {
-        users_id: "US-2023-01-02-9876543210",
-        users_name: "Jane Smith",
-        email: "johndoe@example.com",
-        phone: "9876543210",
-        password: "12345"
-    },
-    {
-        users_id: "US-2023-01-03-1234567890",
-        users_name: "Amazon",
-        email: "amazonnhom7@gmail.com",
-        phone: "1234567890",
-        password: "12345"
-    }
-];
 
 export function updateUserInformation(newUser) {
     // Generate user ID based on registration time and country code

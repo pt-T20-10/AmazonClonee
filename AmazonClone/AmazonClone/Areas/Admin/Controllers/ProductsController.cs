@@ -21,9 +21,38 @@ namespace AmazonClone.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products
+        // GET: Admin/Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            var products = _context.Products; // Không cần Include 'Type' ở đây
+            ViewBag.Type = await GetTypeSelectList();
+            return View(await products.ToListAsync());
+        }
+
+        // POST: Admin/Products (Lọc theo Type)
+        [HttpPost]
+        public async Task<IActionResult> Index(IFormCollection form)
+        {
+            string selectedType = form["Type"].ToString();
+            IQueryable<Product> products;
+
+            if (!string.IsNullOrEmpty(selectedType))
+            {
+                products = _context.Products.Where(p => p.Type == selectedType); // Lọc theo Type
+            }
+            else
+            {
+                products = _context.Products; // Không cần Include 'Type' ở đây
+            }
+
+            ViewBag.Type = await GetTypeSelectList(selectedType);  // Cập nhật giá trị được chọn trong dropdown
+            return View(await products.ToListAsync());
+        }
+
+        private async Task<SelectList> GetTypeSelectList(string selectedType = null)
+        {
+            var types = await _context.Products.Select(p => p.Type).Distinct().ToListAsync();
+            return new SelectList(types, selectedType);
         }
 
         // GET: Admin/Products/Details/5

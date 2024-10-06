@@ -1,18 +1,34 @@
 ﻿@model IEnumerable<AmazonClone.Areas.Admin.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Product Management";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Products List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<div class="row flex">
+  
+    @using (Html.BeginForm("Index", "Products", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-2">
+            <span>Type:</span>
+            @Html.DropDownList("Type", ViewBag.Type as SelectList, "All Products",
+                     new { @class = "form-control codepro-btn-14", onchange = "this.form.submit();" })
+        </div>
+    }
+    <button class="codepro-custom-btn codepro-btn-14" <a asp-action="Create">Create New</a></button>
+</div>
+
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+                
             <th>
                 @Html.DisplayNameFor(model => model.Image)
             </th>
@@ -29,15 +45,6 @@
                 @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SizeChartLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InstructionsLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WarrantyLink)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Stars)
             </th>
             <th>
@@ -48,10 +55,17 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+          <tr>
+             <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+             </td>
+               
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
+                    @{
+                        string imageUrl = "~/" + item.Image;
+                    }
+                    <img src="@Url.Content(imageUrl)" height="110" width="150" alt="@item.Image">
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -65,24 +79,27 @@
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SizeChartLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InstructionsLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WarrantyLink)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Stars)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Counting)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+               <button class ="codepro-custom-btn codepro-btn-14"> 
+                     <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> 
+                    </button>
+
+                    </br>
+
+                    <button class="codepro-custom-btn codepro-btn-14">
+                        <a  casp-action="Details" asp-route-id="@item.ProductId">Details</a>
+                    </button>
+
+                    <br />
+                     <button class="codepro-custom-btn codepro-btn-14">
+                            <a  asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                     </button>
+        
             </td>
         </tr>
 }

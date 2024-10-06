@@ -13,12 +13,7 @@ namespace AmazonClone.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
+        public IActionResult Home()
         {
             return View();
         }

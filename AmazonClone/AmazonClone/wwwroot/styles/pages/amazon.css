@@ -170,10 +170,10 @@
   .back-to-top a{
     color: white;
   }
-a{
-  text-decoration: none;
-  color: rgb(0, 31, 63);
-  text-shadow: 0 0 1px rgba(0, 31, 63, 0.5);
+a {
+    text-decoration: none;
+    color: rgb(254, 250, 224);
+    text-shadow: 0 0 1px rgba(0, 31, 63, 0.5);
 }
 a:hover{
   color: rgb(255, 235, 0);

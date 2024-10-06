@@ -1,10 +1,9 @@
 .admin-footer {
     background-color: #232f3e;
     color: #fff;
-    padding: 40px 0 20px;
+    padding: 20px 0 20px;
     margin-top: 50px;
-    position:absolute;
-    bottom:0px;
+
     min-width:100vw;
 }
 

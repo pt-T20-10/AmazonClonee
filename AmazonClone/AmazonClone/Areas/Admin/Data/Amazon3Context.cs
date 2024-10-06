@@ -16,11 +16,11 @@ public partial class Amazon3Context : DbContext
     {
     }
 
-    public virtual DbSet<Cart> Carts { get; set; }
+    public virtual DbSet<Cart> Cart { get; set; }
 
     public virtual DbSet<DeliveryOption> DeliveryOptions { get; set; }
 
-    public virtual DbSet<Login> Logins { get; set; }
+    public virtual DbSet<Login> Login { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 

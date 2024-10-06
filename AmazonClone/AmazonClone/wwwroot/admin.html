@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="icon" href="images/icons/01cada77a0a7d326d85b7969fe26a728.jpg">
+    <!-- Load a font called Roboto from Google Fonts. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Here are the CSS files for this page. -->
+    <link rel="stylesheet" href="styles/shared/general.css">
+    <link rel="stylesheet" href="styles/pages/admin.css">
+    <link rel="stylesheet" href="styles/pages/admin-footer.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#orders">Orders</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="orders">
+            <h2>Order Management</h2>
+            <div id="orderList"></div>
+        </section>
+        
+        <section id="products">
+            <h2>Product Management</h2>
+            <div id="productList"></div>
+            <button id="addProductBtn">Add New Product</button>
+        </section>
+        
+        <section id="analytics">
+            <h2>Business Analytics</h2>
+            <div id="analyticsData"></div>
+        </section>
+    </main>
+
+    <footer class="admin-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#orders">Manage Orders</a></li>
+                    <li><a href="#products">Manage Products</a></li>
+                    <li><a href="#analytics">View Analytics</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Amazon Admin Panel. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="JavaScript/admin.js"></script>
+</body>
+</html> 

@@ -23,7 +23,7 @@ namespace AmazonClone.Areas.Admin.Controllers
         // GET: Admin/Cart
         public async Task<IActionResult> Index()
         {
-            var amazon3Context = _context.Carts.Include(c => c.DeliveryOption).Include(c => c.Product).Include(c => c.User);
+            var amazon3Context = _context.Cart.Include(c => c.DeliveryOption).Include(c => c.Product).Include(c => c.User);
             return View(await amazon3Context.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var cart = await _context.Carts
+            var cart = await _context.Cart
                 .Include(c => c.DeliveryOption)
                 .Include(c => c.Product)
                 .Include(c => c.User)
@@ -84,7 +84,7 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var cart = await _context.Carts.FindAsync(id);
+            var cart = await _context.Cart.FindAsync(id);
             if (cart == null)
             {
                 return NotFound();
@@ -141,7 +141,7 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var cart = await _context.Carts
+            var cart = await _context.Cart
                 .Include(c => c.DeliveryOption)
                 .Include(c => c.Product)
                 .Include(c => c.User)
@@ -159,10 +159,10 @@ namespace AmazonClone.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var cart = await _context.Carts.FindAsync(id);
+            var cart = await _context.Cart.FindAsync(id);
             if (cart != null)
             {
-                _context.Carts.Remove(cart);
+                _context.Cart.Remove(cart);
             }
 
             await _context.SaveChangesAsync();
@@ -171,7 +171,7 @@ namespace AmazonClone.Areas.Admin.Controllers
 
         private bool CartExists(string id)
         {
-            return _context.Carts.Any(e => e.CartId == id);
+            return _context.Cart.Any(e => e.CartId == id);
         }
     }
 }

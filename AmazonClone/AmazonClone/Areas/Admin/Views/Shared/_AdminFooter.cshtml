@@ -2,12 +2,13 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<div class="back-to-top">
-    <a href="#">Back to top</a>
-</div>
+
 <footer class="admin-footer">
     <div class="footer-content">
         <div class="footer-section">
+            <div class="back-to-top">
+                <a href="#">Back to top</a>
+            </div>
             <h3>Quick Links</h3>
             <ul>
                 <li><a asp-controller="Orders" asp-action="Index">Manage Orders</a></li>
@@ -48,11 +49,11 @@
     function scrollToTop() {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Hiệu ứng mượt
+            behavior: 'smooth' // Smooth scrolling effect
         });
     }
     const backToTopButton = document.querySelector('.back-to-top');
-    backToTopButton.addEventListener("click", =>{
+    backToTopButton.addEventListener("click", () => {
         scrollToTop();
     });
 </script>
