@@ -22,20 +22,24 @@
            ><h1>Admin Dashboard</h1>
        </div> 
         <nav>
-               <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"><a asp-controller="Orders" asp-action="Index">Orders</a></button>
-                 <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"><a asp-controller="Products" asp-action="Index">Products</a></button>
-                <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"> <a asp-controller="Cart" asp-action="Index">Cart</a> </button>
-                 <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"> <a asp-controller="Users" asp-action="Index">Users</a></button>
-                <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"> <a asp-controller="DeliveryOptions" asp-action="Index">DeliveryOptions</a></button>
+            <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"> <a asp-controller="Users" asp-action="Index">Users</a></button>
+            <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"><a asp-controller="Products" asp-action="Index">Products</a></button>
+            <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"> <a asp-controller="Cart" asp-action="Index">Cart</a> </button>
+            <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"> <a asp-controller="DeliveryOptions" asp-action="Index">DeliveryOptions</a></button>
+            <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"><a asp-controller="Orders" asp-action="Index">Orders</a></button>
+            <button class="codepro-custom-btn codepro-btn-14" target="blank" title="Code Pro"><a asp-controller="Tracking" asp-action="Index">Orders Tracking</a></button>
+              
         </nav>
     </header>
 
     <main>
-       @RenderBody()
+        <div>
+            @RenderBody()
+        </div>
+
        
     </main>
     @await Html.PartialAsync("_AdminFooter.cshtml")
-   
     <script type="module" src="~/javascript/amazon.js"></script>
     <script type="module" src="~/javascript/admin.js"></script>
 </body>

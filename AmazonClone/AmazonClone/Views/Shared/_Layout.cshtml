@@ -22,10 +22,10 @@
     <body>
     @await Html.PartialAsync("AmazonHeader.cshtml")
     <div class="main">
-        @RenderBody();
+        @RenderBody(); 
+        @await Html.PartialAsync("AmazonFooter.cshtml")
     </div>
-
-    @await Html.PartialAsync("AmazonFooter.cshtml")
+   
     </body>
 </html>
 

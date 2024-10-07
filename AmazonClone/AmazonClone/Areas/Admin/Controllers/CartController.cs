@@ -19,7 +19,7 @@ namespace AmazonClone.Areas.Admin.Controllers
         {
             _context = context;
         }
-
+   
         // GET: Admin/Cart
         public async Task<IActionResult> Index()
         {

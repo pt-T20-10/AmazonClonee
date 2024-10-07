@@ -3,8 +3,9 @@
     color: #fff;
     padding: 20px 0 20px;
     margin-top: 50px;
-
     min-width:100vw;
+    position:absolute;
+    bottom: 0px;
 }
 
 .footer-content {

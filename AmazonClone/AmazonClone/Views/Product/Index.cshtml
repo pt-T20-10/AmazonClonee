@@ -25,7 +25,7 @@
             </div>
 
             <div class="product-price">
-                @product.PriceCents
+                <span class="price" data-price="@product.PriceCents">@product.PriceCents</span>
             </div>
 
             <div class="product-quantity-container">
@@ -37,11 +37,29 @@
                             <option value="@i">@i</option>
                         }
                     </select>
+            <div class="product-spacer"></div>
                     <button type="submit" class="add-to-cart-button button-primary">
                         Add to Cart
-                   </button>
+                    </button> 
                 </form>
             </div>
         </div>
+    
     }
-    </div>
+</div>
+
+<script>
+    function formatCurrency(priceCents) {
+        return (Math.round(priceCents) / 100).toFixed(2);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var prices = document.querySelectorAll(".price");
+
+        prices.forEach(function (priceElem) {
+            var priceCents = parseInt(priceElem.dataset.price, 10);
+            var formattedPrice = formatCurrency(priceCents);
+            priceElem.innerText = '$' + formattedPrice;
+        });
+    });
+</script>

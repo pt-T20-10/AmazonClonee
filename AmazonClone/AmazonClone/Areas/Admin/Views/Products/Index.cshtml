@@ -19,7 +19,8 @@
                      new { @class = "form-control codepro-btn-14", onchange = "this.form.submit();" })
         </div>
     }
-    <button class="codepro-custom-btn codepro-btn-14" <a asp-action="Create">Create New</a></button>
+    <button class="codepro-custom-btn codepro-btn-14"> <a asp-action="Create">Create New</a> </button>
+
 </div>
 
 <table class="table">
@@ -59,7 +60,6 @@
              <td>
                 @Html.DisplayFor(modelItem => item.ProductId)
              </td>
-               
             <td>
                     @{
                         string imageUrl = "~/" + item.Image;
@@ -84,22 +84,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Counting)
             </td>
-            <td>
-               <button class ="codepro-custom-btn codepro-btn-14"> 
-                     <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> 
+                <td>
+                    <button class="codepro-custom-btn codepro-btn-14">
+                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> 
                     </button>
-
-                    </br>
-
+                    <br/>
                     <button class="codepro-custom-btn codepro-btn-14">
                         <a  casp-action="Details" asp-route-id="@item.ProductId">Details</a>
                     </button>
-
-                    <br />
-                     <button class="codepro-custom-btn codepro-btn-14">
+                    <br/>
+                    <button class="codepro-custom-btn codepro-btn-14">
                             <a  asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
                      </button>
-        
             </td>
         </tr>
 }

@@ -15,6 +15,8 @@ public partial class User
 
     public string? Address { get; set; }
 
+    public string? Phone { get; set; }
+
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
     public virtual ICollection<Login> Logins { get; set; } = new List<Login>();
