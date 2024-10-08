@@ -13,7 +13,7 @@ public partial class Cart
 
     public string? DeliveryOptionId { get; set; }
 
-    public int? Quantity { get; set; }
+    public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     public virtual DeliveryOption? DeliveryOption { get; set; }
 

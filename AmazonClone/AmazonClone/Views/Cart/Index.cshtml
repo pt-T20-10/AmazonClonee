@@ -1,51 +1,42 @@
-﻿@model IEnumerable<AmazonClone.Areas.Admin.Models.Cart>
+﻿
+  @model IEnumerable<AmazonClone.Areas.Admin.Models.Cart>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Your Cart</h2>
 
-<div class="cart-items">
-    @foreach (var item in Model)
-    {
-        <div class="cart-item-container">
-            <div class="delivery-date">
-                Delivery date: 
-            </div>
-            <div class="cart-item-details-grid">
-                <img class="product-image"
-                     src="@item.Product.Image">
+<div class="checkout-container">
+    <h2>Review your order</h2>
 
-                <div class="cart-item-details">
-                    <div class="product-name">
-                        @item.Product.Name
+    <!-- Cart Items Section -->
+    <div class="cart-items">
+        @foreach (var item in Model)
+        {
+            // Sử dụng item.CartItems nếu bạn có thuộc tính CartItems trong Cart
+            foreach (var cartItem in item.CartItems)
+            {
+                var product = cartItem.Product;
+                <div class="cart-item">
+                    <div class="delivery-date">
+                        Delivery date: @DateTime.Now.AddDays(7).ToString("dddd, MMMM dd")
                     </div>
-                    <div class="product-price">
-                        @item.Product.PriceCents
-                    </div>
-                    <div class="product-quantity">
-                        <span>
-                            Quantity: <span class="quantity-label
-                  js-quantity-label">@item.Quantity</span>
-                        </span>
-                        <span class="update-quantity-link link-primary js-update-link"
-                              data-product-id="@item.Product.ProductId">
-                            Update
-                        </span>
-                        <input class="quantity-input js-save-quantity-input
-                js-quantity-input-$@item.Product.ProductId}">
-                        <span class="save-quantity-link link-primary js-save-quantity-link"
-                              data-product-id="@item.Product.ProductId}">
-                            Save
-                        </span>
-                        <span class="delete-quantity-link link-primary
-                            js-delete-link"
-                              data-product-id="@item.Product.ProductId">
-                            Delete
-                        </span>
+                    <div class="cart-item-details">
+                        <img src="@product.Image" alt="@product.Name" class="product-image" />
+                        <div class="product-details">
+                            <h3 class="product-name">@product.Name</h3>
+                            <p class="product-price">Price: $@product.PriceCents</p>
+                            <div class="product-quantity">
+                                <span>Quantity: @cartItem.ProductQuantity</span>
+                                <a href="#" class="link-primary">Update</a>
+                                <a href="#" class="link-primary">Delete</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    }
+            }
+        }
+    </div>
+
+    <!-- Remaining sections remain the same -->
+    ...
 </div>

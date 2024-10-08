@@ -1,3 +1,8 @@
+*{
+    box-sizing:border-box;
+    margin: 0;
+
+}
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
@@ -64,5 +69,10 @@ th {
 .title{
     display:flex;
     justify-content:center;
+    align-items: center;
+}
+.background-img{
+    display: flex;
+    justify-content: center;
     align-items: center;
 }

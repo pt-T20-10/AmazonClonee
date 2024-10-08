@@ -15,6 +15,7 @@
     <link href="~/styles/pages/amazon.css" rel="stylesheet" />
     <link href="~/styles/pages/admin-footer.css" rel="stylesheet" />
     <link href="~/styles/shared/table.css" rel="stylesheet" />
+    <link href="~/styles/shared/form.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -31,14 +32,9 @@
               
         </nav>
     </header>
-
-    <main>
-        <div>
+    <div class="main">  
             @RenderBody()
-        </div>
-
-       
-    </main>
+    </div>
     @await Html.PartialAsync("_AdminFooter.cshtml")
     <script type="module" src="~/javascript/amazon.js"></script>
     <script type="module" src="~/javascript/admin.js"></script>

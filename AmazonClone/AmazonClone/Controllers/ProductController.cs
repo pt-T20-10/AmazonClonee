@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AmazonClone.Areas.Admin.Data;
 using AmazonClone.Areas.Admin.Models;
+using System.Security.Claims;
 
 namespace AmazonClone.Controllers
 {
@@ -19,53 +20,72 @@ namespace AmazonClone.Controllers
                 _context = context;
             }
 
-            // Action hiển thị danh sách sản phẩm
-            public ActionResult Index()
-            {
-                var products = _context.Products.ToList(); // Lấy danh sách sản phẩm từ DB
-                return View(products);
-            }
-          private string GenerateCustomId()
-            {
-            var guid = Guid.NewGuid().ToString();
-
-            // Tùy chỉnh: giữ lại 8 ký tự đầu và 4 ký tự cuối, thêm dấu "-" ở giữa
-            return guid.Substring(0, 8) + "-" + guid.Substring(guid.Length - 4);
+        // Action hiển thị danh sách sản phẩm
+        public ActionResult Index()
+        {
+            var products = _context.Products.ToList(); // Lấy danh sách sản phẩm từ DB
+            return View(products);
         }
 
         // Action thêm sản phẩm vào giỏ hàng
         [HttpPost]
-            public ActionResult AddToCart(string productId, int quantity = 1)
+        public ActionResult AddToCart(string productId, int quantity = 1)
+        {
+            // Lấy hoặc tạo giỏ hàng cho người dùng
+            var cartId = GenerateCustomId(); // Thực hiện lấy giỏ hàng hiện tại của người dùng
+            var cart = _context.Cart.Include(c => c.CartItems).FirstOrDefault(c => c.CartId == cartId);
+
+            if (cart == null)
             {
-                var cartItem = _context.Cart.FirstOrDefault(ci => ci.ProductId == productId);
-                var cartId = this.GenerateCustomId();
-
-                if (cartItem == null)
+                cart = new Cart
                 {
-                    // Nếu sản phẩm chưa có trong giỏ, thêm mới
-                    cartItem = new Cart
-                    {
-                        CartId = cartId,
-                        ProductId = productId,
-                        Quantity = quantity
-                    };
-                    _context.Cart.Add(cartItem);
-                }
-                else
-                {
-                    // Nếu sản phẩm đã có, cập nhật số lượng
-                    cartItem.Quantity += quantity;
-                }
-
-                _context.SaveChanges(); // Lưu thay đổi vào DB
-
-                // Trả về tổng số lượng sản phẩm trong giỏ hàng
-                var totalQuantity = _context.Cart.Sum(ci => ci.Quantity);
-                return RedirectToAction("Index", new { cartQuantity = totalQuantity });
+                    CartId = GenerateCustomId(),
+                    UserId = GetCurrentUserId() // Thực hiện lấy ID của người dùng đã đăng nhập
+                };
+                _context.Cart.Add(cart);
             }
 
-            // Action tìm kiếm sản phẩm
-            public ActionResult Search(string query)
+            // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+
+            if (cartItem == null)
+            {
+                // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới một CartItem
+                cartItem = new CartItem
+                {
+                    CartitemId = GenerateCustomId(),
+                    CartId = cart.CartId,
+                    ProductId = productId,
+                    ProductQuantity = cart.CartItems.Count()
+                };
+                cart.CartItems.Add(cartItem); // Thêm CartItem vào giỏ hàng
+            }
+            else
+            {
+                // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng
+                cartItem.ProductQuantity += quantity;
+            }
+
+            // Lưu các thay đổi vào cơ sở dữ liệu
+            _context.SaveChanges();
+
+            // Trả về tổng số lượng sản phẩm trong giỏ hàng
+            var totalQuantity = cart.CartItems.Sum(ci => ci.ProductQuantity);
+            return RedirectToAction("Index", new { cartQuantity = totalQuantity });
+        }
+        private string GetCurrentUserId()
+        {
+            return HttpContext.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value; // Thay đổi ClaimTypes nếu cần thiết
+        }
+
+        private string GenerateCustomId()
+        {
+            var guid = Guid.NewGuid().ToString();
+            return guid.Substring(0, 8) + "-" + guid.Substring(guid.Length - 4);
+        }
+
+        // Action tìm kiếm sản phẩm
+        public ActionResult Search(string query)
             {
                 var products = _context.Products
                     .Where(p => p.Name.Contains(query) || p.Keywords.Contains(query) || p.Type.Contains(query))

@@ -18,9 +18,11 @@ public partial class Amazon3Context : DbContext
 
     public virtual DbSet<Cart> Cart { get; set; }
 
+    public virtual DbSet<CartItem> CartItems { get; set; }
+
     public virtual DbSet<DeliveryOption> DeliveryOptions { get; set; }
 
-    public virtual DbSet<Login> Login { get; set; }
+    public virtual DbSet<Login> Logins { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 
@@ -32,7 +34,7 @@ public partial class Amazon3Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=ACER\\MSSQLSERVER03;Initial Catalog=Amazon3;Persist Security Info=True;User ID=amazonweb;Password=12345;Encrypt=True;Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Data Source=ACER\\MSSQLSERVER03;Initial Catalog=Amazon3;Persist Security Info=True;User ID=amazonweb;Password=12345;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -51,7 +53,6 @@ public partial class Amazon3Context : DbContext
             entity.Property(e => e.ProductId)
                 .HasMaxLength(50)
                 .HasColumnName("productID");
-            entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.UserId)
                 .HasMaxLength(50)
                 .HasColumnName("userID");
@@ -67,6 +68,32 @@ public partial class Amazon3Context : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Cart__userID__412EB0B6");
+        });
+
+        modelBuilder.Entity<CartItem>(entity =>
+        {
+            entity.HasKey(e => e.CartitemId).HasName("PK__CartItem__21FF2817797B256A");
+
+            entity.ToTable("CartItem");
+
+            entity.Property(e => e.CartitemId)
+                .HasMaxLength(50)
+                .HasColumnName("cartitemID");
+            entity.Property(e => e.CartId)
+                .HasMaxLength(50)
+                .HasColumnName("cartID");
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(50)
+                .HasColumnName("productID");
+            entity.Property(e => e.ProductQuantity).HasColumnName("productQuantity");
+
+            entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
+                .HasForeignKey(d => d.CartId)
+                .HasConstraintName("FK__CartItem__cartID__6FE99F9F");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.CartItems)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK__CartItem__produc__70DDC3D8");
         });
 
         modelBuilder.Entity<DeliveryOption>(entity =>
@@ -238,6 +265,9 @@ public partial class Amazon3Context : DbContext
             entity.Property(e => e.Password)
                 .HasMaxLength(100)
                 .HasColumnName("password");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(50)
+                .HasColumnName("phone");
         });
 
         OnModelCreatingPartial(modelBuilder);

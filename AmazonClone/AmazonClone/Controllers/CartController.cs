@@ -29,11 +29,6 @@ namespace AmazonClone.Controllers
         public ActionResult UpdateQuantity(string productId, int quantity)
         {
             var cartItem = _context.Cart.FirstOrDefault(ci => ci.ProductId == productId);
-            if (cartItem != null)
-            {
-                cartItem.Quantity = quantity;
-                _context.SaveChanges();
-            }
             return RedirectToAction("Index");
         }
     }
