@@ -23,7 +23,7 @@ namespace AmazonClone.Areas.Admin.Controllers
         // GET: Admin/Orders
         public async Task<IActionResult> Index()
         {
-            var amazon3Context = _context.Orders.Include(o => o.Product).Include(o => o.User);
+            var amazon3Context = _context.Orders.Include(o => o.Product);
             return View(await amazon3Context.ToListAsync());
         }
 
@@ -37,7 +37,6 @@ namespace AmazonClone.Areas.Admin.Controllers
 
             var order = await _context.Orders
                 .Include(o => o.Product)
-                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {
@@ -69,7 +68,7 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", order.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
             return View(order);
         }
 
@@ -87,7 +86,7 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", order.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
             return View(order);
         }
 
@@ -124,7 +123,7 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", order.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", order.UserId);
             return View(order);
         }
 
@@ -138,7 +137,7 @@ namespace AmazonClone.Areas.Admin.Controllers
 
             var order = await _context.Orders
                 .Include(o => o.Product)
-                .Include(o => o.User)
+                //.Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {

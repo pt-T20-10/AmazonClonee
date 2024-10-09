@@ -1,42 +1,92 @@
-﻿
-  @model IEnumerable<AmazonClone.Areas.Admin.Models.Cart>
+﻿@using AmazonClone.Models
+@model CartViewModel
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_CheckoutLayout.cshtml";
 }
 
-<div class="checkout-container">
-    <h2>Review your order</h2>
 
-    <!-- Cart Items Section -->
-    <div class="cart-items">
-        @foreach (var item in Model)
+
+<div class="order-summary">
+    <form method="post" asp-action="Index">
+        @foreach (var item in Model.CartItems)
         {
-            // Sử dụng item.CartItems nếu bạn có thuộc tính CartItems trong Cart
-            foreach (var cartItem in item.CartItems)
-            {
-                var product = cartItem.Product;
-                <div class="cart-item">
-                    <div class="delivery-date">
-                        Delivery date: @DateTime.Now.AddDays(7).ToString("dddd, MMMM dd")
-                    </div>
+            <div class="cart-item-container">
+                <div class="cart-item-details-grid">
+                    <img src="@item.ImageUrl" alt="@item.ProductName" class="product-image" />
                     <div class="cart-item-details">
-                        <img src="@product.Image" alt="@product.Name" class="product-image" />
-                        <div class="product-details">
-                            <h3 class="product-name">@product.Name</h3>
-                            <p class="product-price">Price: $@product.PriceCents</p>
-                            <div class="product-quantity">
-                                <span>Quantity: @cartItem.ProductQuantity</span>
-                                <a href="#" class="link-primary">Update</a>
-                                <a href="#" class="link-primary">Delete</a>
-                            </div>
+                        <div class="product-name">@item.ProductName</div>
+                        <div class="product-price">$@item.Price</div>
+                        <div class="product-quantity">
+                            <span>Quantity:
+                                <input type="number" name="quantity" value="@item.Quantity" min="1" class="quantity-label" />
+                            </span>
+                            <input class="update-quantity-link link-primary" type="hidden" name="productId" value="@item.ProductId" />
+                            <input class="update-quantity-link link-primary" type="submit" value="Update" formaction="@Url.Action("UpdateQuantity")" />
+                            <input class="delete-quantity-link link-primary" type="submit" value="Delete" formaction="@Url.Action("Delete")" />
                         </div>
                     </div>
                 </div>
-            }
+            </div>
         }
-    </div>
-
-    <!-- Remaining sections remain the same -->
-    ...
+    </form>
 </div>
+<div class="payment-summary">
+    <div class="delivery-options">
+    <div class= "delivery-options-title">
+        Choose a delivery option:
+    </div>
+    <form method="post" asp-action="SelectDeliveryOption">
+        @foreach (var option in Model.DeliveryOptions)
+        {
+                <div class="delivery-option">
+                    <input type="radio" name="SelectedDeliveryOptionId" class="delivery-option-input" value="@option.DeliveryOptionId"
+                       @if (option.DeliveryOptionId == Model.SelectedDeliveryOptionId) { <text>checked</text> } />
+                    <div>
+                        <div class="delivery-option-date">
+                           Date: 
+                        </div>
+                        <div class="delivery-option-price">
+                           $ Shipping
+                        </div>
+                <label>@option.Name - $@option.Price</label>
+            </div>
+        </div>
+        }
+    </form>
+    </div>
+        <div class="payment-summary-title">
+            Order Summary
+        </div>
+        <div class="payment-summary-row">
+            <div>
+                 Items:
+            </div>
+            <div class="payment-summary-money">
+                $@Model.TotalPrice
+            </div>
+        </div>
+
+        <div class="payment-summary-row">
+            <div>Shipping &amp; handling:</div>
+            <div class="payment-summary-money">
+                $@Model.ShippingCost
+            </div> 
+        </div>
+        <div class="payment-summary-row subtotal-row">
+            <div>Total before tax:</div>
+            <div class="payment-summary-money">
+                    $@Model.EstimatedTax
+             </div>
+           </div>
+        <div class="payment-summary-row total-row">
+            <div>Order total:</div>
+            <div class="payment-summary-money">$@Model.OrderTotal
+            </div>
+        </div>
+    <form method="post" asp-action="PlaceOrder">
+            <button class="place-order-button button-primary type="submit">Place your order </button>
+    </form>
+
+</div>
+

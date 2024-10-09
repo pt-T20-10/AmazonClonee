@@ -5,39 +5,28 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="form-container">
-            <div class="form-style-2">   
-               <div class="form-style-2-heading"><h1>Create</h1></div> 
-                <form asp-action="Create">
-                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                     <div class="form-group">
-                         <label asp-for="CartId" class="control-label"></label>
-                         <input asp-for="CartId" class="form-control" />
-                         <span asp-validation-for="CartId" class="text-danger"></span>
-                      </div>
-                     <div  class="form-group input-field">
-                     <label asp-for="UserId" class="control-label"></label>
-                      <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId" class="select-field"></select>
-                     </div>
-                    <div  class="form-group">
-                     <label asp-for="ProductId" class="control-label"></label>
-                     <select asp-for="ProductId" class ="form-control" asp-items="ViewBag.ProductId"  class="select-field"></select>
-                     </div>
-                    <div  class="form-group">
-                     <label asp-for="DeliveryOptionId" class="control-label"></label>
-                     <select asp-for="DeliveryOptionId" class ="form-control" asp-items="ViewBag.DeliveryOptionId"  class="select-field"></select>
-                    </div>
-                    <div  class="form-group">
-                    <input type="submit" value="Create" class="codepro-custom-btn codepro-btn-7" />
-                          <button class="codepro-custom-btn codepro-btn-14"><a asp-action="Index">Back to List</a></button>
-                    </div>
-            </form>
-           
-                     </div>
-                    
-                 </div>
-                 
+    <div class="form-style-2">
+        <div class="form-style-2-heading">
+            <h1>Create Cart</h1>
         </div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <div class="form-group">
+                <label asp-for="CartId" class="control-label"></label>
+                <input asp-for="CartId" class="form-control" />
+                <span asp-validation-for="CartId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeliveryOptionId" class="control-label"></label>
+                <select asp-for="DeliveryOptionId" class="form-control select-field" asp-items="ViewBag.DeliveryOptionId"></select>
+                <span asp-validation-for="DeliveryOptionId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="codepro-custom-btn codepro-btn-7" />
+                <a asp-action="Index" class="codepro-custom-btn codepro-btn-14">Back to List</a>
+            </div>
+        </form>
     </div>
-         
 </div>

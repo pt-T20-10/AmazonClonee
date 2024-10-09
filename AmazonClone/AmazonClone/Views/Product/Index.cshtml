@@ -29,7 +29,7 @@
             </div>
 
             <div class="product-quantity-container">
-                <form action="/Product/AddToCart" method="post">
+                <form  asp-action="AddToCart" asp-controller="Cart" method="post">
                     <input type="hidden" name="productId" value="@product.ProductId" />
                     <select name="quantity">
                         @for (int i = 1; i <= 10; i++)

@@ -10,45 +10,48 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model=> model.CartId)
+                @Html.DisplayNameFor(model => model.CartId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeliveryOption)
+                Delivery Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
+                Products
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CartId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryOption.DeliveryOptionId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CartId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CartId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CartId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CartId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryOption)
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var cartItem in item.CartItems)
+                        {
+                            <li>
+                                Product: @cartItem.Product.Name - Quantity: @cartItem.Quantity
+                            </li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CartId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CartId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CartId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

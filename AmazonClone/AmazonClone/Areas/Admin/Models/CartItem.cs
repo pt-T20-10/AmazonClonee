@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace AmazonClone.Areas.Admin.Models;
 
-public partial class CartItem
+public class CartItem
 {
-    public string CartitemId { get; set; } = null!;
+    [Required]
+    public string CartItemId { get; set; }
+    [Required]
+    public string CartId { get; set; }
+    [Required]
+    public string ProductId { get; set; } // Kiểm tra đây
+    public int Quantity { get; set; }
 
-    public string? CartId { get; set; }
-
-    public string? ProductId { get; set; }
-
-    public int? ProductQuantity { get; set; }
-
-    public virtual Cart? Cart { get; set; }
-
-    public virtual Product? Product { get; set; }
+    public virtual Cart Cart { get; set; }
+    public virtual Product Product { get; set; }
 }

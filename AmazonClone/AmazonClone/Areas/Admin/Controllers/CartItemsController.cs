@@ -8,26 +8,27 @@ using Microsoft.EntityFrameworkCore;
 using AmazonClone.Areas.Admin.Data;
 using AmazonClone.Areas.Admin.Models;
 
+
 namespace AmazonClone.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CartController : Controller
+    public class CartItemsController : Controller
     {
         private readonly Amazon3Context _context;
 
-        public CartController(Amazon3Context context)
+        public CartItemsController(Amazon3Context context)
         {
             _context = context;
         }
-   
-        // GET: Admin/Cart
+
+        // GET: Admin/CartItems
         public async Task<IActionResult> Index()
         {
-            var amazon3Context = _context.Cart.Include(c => c.DeliveryOption).Include(c => c.Product).Include(c => c.User);
+            var amazon3Context = _context.CartItems.Include(c => c.Cart).Include(c => c.Product);
             return View(await amazon3Context.ToListAsync());
         }
 
-        // GET: Admin/Cart/Details/5
+        // GET: Admin/CartItems/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -35,48 +36,45 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var cart = await _context.Cart
-                .Include(c => c.DeliveryOption)
+            var cartItem = await _context.CartItems
+                .Include(c => c.Cart)
                 .Include(c => c.Product)
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.CartId == id);
-            if (cart == null)
+                .FirstOrDefaultAsync(m => m.CartItemId == id);
+            if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(cart);
+            return View(cartItem);
         }
 
-        // GET: Admin/Cart/Create
+        // GET: Admin/CartItems/Create
         public IActionResult Create()
         {
-            ViewData["DeliveryOptionId"] = new SelectList(_context.DeliveryOptions, "DeliveryOptionId", "DeliveryOptionId");
+            ViewData["CartId"] = new SelectList(_context.Cart, "CartId", "CartId");
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId");
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
             return View();
         }
 
-        // POST: Admin/Cart/Create
+        // POST: Admin/CartItems/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CartId,UserId,ProductId,DeliveryOptionId,Quantity")] Cart cart)
+        public async Task<IActionResult> Create([Bind("CartitemId,CartId,ProductId,ProductQuantity")] CartItem cartItem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cart);
+                _context.Add(cartItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DeliveryOptionId"] = new SelectList(_context.DeliveryOptions, "DeliveryOptionId", "DeliveryOptionId", cart.DeliveryOptionId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cart.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", cart.UserId);
-            return View(cart);
+            ViewData["CartId"] = new SelectList(_context.Cart, "CartId", "CartId", cartItem.CartId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cartItem.ProductId);
+            return View(cartItem);
         }
 
-        // GET: Admin/Cart/Edit/5
+        // GET: Admin/CartItems/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -84,25 +82,24 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var cart = await _context.Cart.FindAsync(id);
-            if (cart == null)
+            var cartItem = await _context.CartItems.FindAsync(id);
+            if (cartItem == null)
             {
                 return NotFound();
             }
-            ViewData["DeliveryOptionId"] = new SelectList(_context.DeliveryOptions, "DeliveryOptionId", "DeliveryOptionId", cart.DeliveryOptionId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cart.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", cart.UserId);
-            return View(cart);
+            ViewData["CartId"] = new SelectList(_context.Cart, "CartId", "CartId", cartItem.CartId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cartItem.ProductId);
+            return View(cartItem);
         }
 
-        // POST: Admin/Cart/Edit/5
+        // POST: Admin/CartItems/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CartId,UserId,ProductId,DeliveryOptionId,Quantity")] Cart cart)
+        public async Task<IActionResult> Edit(string id, [Bind("CartitemId,CartId,ProductId,ProductQuantity")] CartItem cartItem)
         {
-            if (id != cart.CartId)
+            if (id != cartItem.CartItemId)
             {
                 return NotFound();
             }
@@ -111,12 +108,12 @@ namespace AmazonClone.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(cart);
+                    _context.Update(cartItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CartExists(cart.CartId))
+                    if (!CartItemExists(cartItem.CartItemId))
                     {
                         return NotFound();
                     }
@@ -127,13 +124,12 @@ namespace AmazonClone.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DeliveryOptionId"] = new SelectList(_context.DeliveryOptions, "DeliveryOptionId", "DeliveryOptionId", cart.DeliveryOptionId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cart.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", cart.UserId);
-            return View(cart);
+            ViewData["CartId"] = new SelectList(_context.Cart, "CartId", "CartId", cartItem.CartId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", cartItem.ProductId);
+            return View(cartItem);
         }
 
-        // GET: Admin/Cart/Delete/5
+        // GET: Admin/CartItems/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -141,37 +137,36 @@ namespace AmazonClone.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var cart = await _context.Cart
-                .Include(c => c.DeliveryOption)
+            var cartItem = await _context.CartItems
+                .Include(c => c.Cart)
                 .Include(c => c.Product)
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.CartId == id);
-            if (cart == null)
+                .FirstOrDefaultAsync(m => m.CartItemId == id);
+            if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(cart);
+            return View(cartItem);
         }
 
-        // POST: Admin/Cart/Delete/5
+        // POST: Admin/CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var cart = await _context.Cart.FindAsync(id);
-            if (cart != null)
+            var cartItem = await _context.CartItems.FindAsync(id);
+            if (cartItem != null)
             {
-                _context.Cart.Remove(cart);
+                _context.CartItems.Remove(cartItem);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CartExists(string id)
+        private bool CartItemExists(string id)
         {
-            return _context.Cart.Any(e => e.CartId == id);
+            return _context.CartItems.Any(e => e.CartItemId == id);
         }
     }
 }
